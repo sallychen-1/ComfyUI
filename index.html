@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ComfyUI 圖生圖作業</title>
+  <style>
+    body { max-width: 850px; margin: 32px auto; padding: 0 20px; font-family: Arial, "Microsoft JhengHei", sans-serif; color: #222; line-height: 1.8; }
+    h1 { font-size: 26px; }
+    h2 { font-size: 20px; margin-top: 32px; }
+    img { display: block; max-width: 100%; height: auto; }
+    .photos { display: flex; gap: 24px; }
+    .photos section { flex: 1; min-width: 0; }
+    .placeholder { padding: 40px 16px; background: #f3f3f3; text-align: center; color: #666; border: 1px solid #ddd; }
+    .prompt { background: #f3f3f3; padding: 16px; overflow-wrap: anywhere; }
+    .note { color: #666; font-size: 14px; }
+    @media (max-width: 550px) { .photos { display: block; } }
+  </style>
+</head>
+<body>
+  <h1>ComfyUI Image-to-Image 作業</h1>
+
+  <div class="photos">
+    <section>
+      <h2>1. 原圖</h2>
+      <img src="assets/original.jpg" alt="原圖">
+    </section>
+    <section>
+      <h2>2. 生成的圖</h2>
+      <img src="assets/generated.png" alt="ComfyUI 生成的圖">
+    </section>
+  </div>
+
+  <h2>3. 完整工作流截圖</h2>
+  <a href="assets/workflow.png" target="_blank" rel="noopener"><img src="assets/workflow.png" alt="完整工作流截圖（點擊查看原始大小）"></a>
+
+  <h2>4. 正向提示詞</h2>
+  
+  <p class="prompt">preserve the original person and face, keep the same composition, change the scarf to a beautiful red scarf, add elegant floral patterns on the scarf, detailed flower decorations, realistic fabric texture, natural lighting, high quality, highly detailed</p>
+
+  <h2>5. 反向提示詞</h2>
+  <p class="prompt">blurry, low quality, distorted face, deformed body, bad anatomy, extra fingers, unrealistic scarf, messy floral patterns, ugly, watermark, text, oversaturated</p>
+
+  <h2>6. 個人心得</h2>
+  <p>這是我第一次使用 ComfyUI 來生成圖片。一開始看到這麼多節點和連接線，真的有點不知道該怎麼操作。後來跟著老師的教學一步一步嘗試，才慢慢了解基本的使用方法。</p>
+  <p>這次我想把照片中的圍巾改成紅色，再加上一些花朵圖案。我原本以為只要輸入提示詞，AI 就會直接生成我想要的圖片，但實際操作後發現沒有那麼簡單。有時候生成的結果跟想像中不太一樣，還需要修改提示詞和調整參數。</p>
+  <p>雖然過程中遇到一些困難，但看到自己成功生成圖片的時候，還是覺得很有成就感。透過這次作業，我學到了一些 ComfyUI 的基本操作，也發現 AI 生成圖片很有趣。希望以後可以再多嘗試不同的風格和功能。</p>
+
+  <h2>7. 工作流 JSON</h2>
+  <p><a href="assets/workflow.json" download="workflow.json">下載工作流 JSON</a></p>
+</body>
+</html>
