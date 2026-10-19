@@ -1,52 +1,53 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ComfyUI 圖生圖作業</title>
-  <style>
-    body { max-width: 850px; margin: 32px auto; padding: 0 20px; font-family: Arial, "Microsoft JhengHei", sans-serif; color: #222; line-height: 1.8; }
-    h1 { font-size: 26px; }
-    h2 { font-size: 20px; margin-top: 32px; }
-    img { display: block; max-width: 100%; height: auto; }
-    .photos { display: flex; gap: 24px; }
-    .photos section { flex: 1; min-width: 0; }
-    .placeholder { padding: 40px 16px; background: #f3f3f3; text-align: center; color: #666; border: 1px solid #ddd; }
-    .prompt { background: #f3f3f3; padding: 16px; overflow-wrap: anywhere; }
-    .note { color: #666; font-size: 14px; }
-    @media (max-width: 550px) { .photos { display: block; } }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="ComfyUI 圖生圖課程作業：原圖、生成結果、完整工作流、提示詞與個人心得。">
+<title>ComfyUI 圖生圖作業</title>
+<style>
+:root{color-scheme:light;--ink:#28332f;--muted:#718078;--accent:#3e6655;--line:#dfe6df}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f4f6f2;color:var(--ink);font-family:"Microsoft JhengHei","PingFang TC",Arial,sans-serif;line-height:1.85}main{max-width:980px;margin:auto;padding:50px 28px 28px}header{padding:12px 0 32px;border-bottom:1px solid var(--line);margin-bottom:30px}.eyebrow{font-size:11px;letter-spacing:2px;color:var(--accent);font-weight:700}h1{font-size:clamp(26px,5vw,38px);font-weight:600;letter-spacing:1px;line-height:1.45;margin:12px 0 0}h2{font-size:19px;font-weight:600;display:flex;align-items:center;gap:12px;margin:0 0 20px}h2 span{color:var(--accent);font-size:12px;font-weight:500;letter-spacing:1px}section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:28px;margin-bottom:24px}.photos{display:grid;grid-template-columns:1fr 1fr;gap:24px}.photos section{padding:20px}.photos h2{margin-bottom:16px}figure{margin:0}img{display:block;max-width:100%;height:auto;border-radius:6px}.photos img{width:100%}figcaption{font-size:11px;letter-spacing:1.5px;color:var(--muted);margin-top:12px}.workflow-link{display:block;background:#141414;border-radius:6px}.hint{font-size:12px;color:var(--muted);margin:12px 0 0}.prompts{display:grid;grid-template-columns:1fr 1fr;gap:24px}.prompts section{min-width:0;background:#edf2ec}.prompts section:last-child{background:#f6f0ec}.prompt{font-family:Consolas,monospace;font-size:13px;line-height:1.9;overflow-wrap:anywhere;margin:0}.reflection p{font-size:15px;color:#48564e;margin:0 0 18px}.reflection p:last-child{margin:0}.download{display:flex;justify-content:space-between;align-items:center;gap:20px}.download h2{margin:0}.button{display:inline-block;background:var(--accent);color:white;text-decoration:none;border-radius:6px;padding:12px 22px;font-size:14px;white-space:nowrap}.button:hover{background:#2e5142}a:focus-visible{outline:3px solid #a77b38;outline-offset:5px}footer{font-size:11px;color:var(--muted);text-align:center;padding:8px 0 20px;letter-spacing:1px}@media(max-width:620px){main{padding:28px 16px 16px}.photos,.prompts{grid-template-columns:1fr;gap:0}section{padding:22px;border-radius:9px;margin-bottom:18px}.photos section{padding:18px}.download{align-items:flex-start;flex-direction:column}header{padding-bottom:24px;margin-bottom:22px}h2{font-size:18px}.reflection p{font-size:14px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Refined presentation */
+:root{--ink:#24342e;--muted:#7c8176;--accent:#49634f;--line:#e3e4da}
+body{background:#f5f3ec;background-image:radial-gradient(ellipse at 95% 0%,#e5ebdf 0,transparent 42%)}
+main{max-width:1040px;padding-top:42px}
+header{position:relative;overflow:hidden;border:1px solid #d9e0d0;border-radius:20px;background:#e8edde;padding:38px 40px 42px;margin-bottom:32px;box-shadow:0 8px 28px #263a2510}
+header:after{content:"";position:absolute;width:260px;height:260px;border:1px solid #9eae8e55;border-radius:50%;right:-85px;top:-105px;pointer-events:none}
+header:before{content:"";position:absolute;width:210px;height:210px;border:1px solid #9eae8e55;border-radius:50%;right:-60px;top:-80px;pointer-events:none}
+.eyebrow{font-size:10px;letter-spacing:3px;position:relative;z-index:1;color:#66735e}
+h1{font-family:"Noto Serif TC","PMingLiU",serif;font-size:clamp(28px,5vw,43px);font-weight:600;letter-spacing:2px;margin-top:16px;position:relative;z-index:1}
+section{border-color:#e5e6de;border-radius:16px;padding:30px;box-shadow:0 5px 20px #2c3d2c05;margin-bottom:28px}
+h2{font-size:19px;letter-spacing:.5px;gap:11px;margin-bottom:23px}
+h2 span{display:inline-flex;align-items:center;justify-content:center;width:31px;height:31px;flex-shrink:0;border-radius:50%;background:#eef1e8;color:#63755b;font-size:10px;font-weight:600;letter-spacing:0}
+.photos{gap:26px}.photos section{padding:17px 17px 13px}.photos h2{margin:2px 3px 17px}.photos img{border-radius:9px}.photos section:last-child h2 span{background:#eee9df;color:#8a7358}
+figcaption{margin:13px 4px 3px;font-size:10px;color:#88907e;letter-spacing:2px}
+.workflow-link{padding:8px;border-radius:10px;background:#e9ece5}.workflow-link img{border-radius:5px}.hint{font-size:11px;margin-top:14px}
+.prompts{gap:26px}.prompts section{background:#edf1e7;border-color:#dfe6d7;border-top:3px solid #718264}.prompts section:last-child{background:#f4eee5;border-color:#e9dfd0;border-top-color:#b49a7c}.prompts h2 span{background:#ffffff99}.prompts section:last-child h2 span{background:#ffffff99;color:#977c5c}.prompt{font-size:12px;line-height:2;color:#52604b}.prompts section:last-child .prompt{color:#746553}
+.reflection{padding:34px 36px}.reflection p{line-height:2.1;max-width:790px;margin-left:auto;margin-right:auto;color:#5a6356}.reflection h2{margin-bottom:26px}
+.download{background:#e9edde;border-color:#dce3d1;padding:26px 30px}.button{border-radius:8px;background:#49634f;box-shadow:0 4px 10px #273a2315;letter-spacing:.3px;padding:13px 23px;transition:background .15s,transform .15s}.button:hover{background:#354f3b;transform:translateY(-1px)}
+footer{padding:10px 0 24px;font-size:10px;letter-spacing:2px}
+@media(max-width:620px){main{padding-top:22px}header{padding:28px 24px 32px;border-radius:14px;margin-bottom:24px}header:after{right:-150px}header:before{right:-120px}h1{letter-spacing:1px}section{padding:23px;border-radius:12px;margin-bottom:22px}.photos section{padding:15px}.photos,.prompts{gap:0}.reflection{padding:25px}.download{padding:24px}.reflection p{font-size:14px}.prompt{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.button{transition:none}.button:hover{transform:none}}
+</style>
 </head>
-<body>
-  <h1>ComfyUI Image-to-Image 作業</h1>
-
-  <div class="photos">
-    <section>
-      <h2>1. 原圖</h2>
-      <img src="./original.jpg" alt="原圖">
-    </section>
-    <section>
-      <h2>2. 生成的圖</h2>
-      <img src="./generated.png" alt="ComfyUI 生成的圖">
-    </section>
-  </div>
-
-  <h2>3. 完整工作流截圖</h2>
-  <a href="./workflow.png" target="_blank" rel="noopener"><img src="assets/workflow.png" alt="完整工作流截圖（點擊查看原始大小）"></a>
-
-  <h2>4. 正向提示詞</h2>
-  
-  <p class="prompt">preserve the original person and face, keep the same composition, change the scarf to a beautiful red scarf, add elegant floral patterns on the scarf, detailed flower decorations, realistic fabric texture, natural lighting, high quality, highly detailed</p>
-
-  <h2>5. 反向提示詞</h2>
-  <p class="prompt">blurry, low quality, distorted face, deformed body, bad anatomy, extra fingers, unrealistic scarf, messy floral patterns, ugly, watermark, text, oversaturated</p>
-
-  <h2>6. 個人心得</h2>
-  <p>這是我第一次使用 ComfyUI 來生成圖片。一開始看到這麼多節點和連接線，真的有點不知道該怎麼操作。後來跟著老師的教學一步一步嘗試，才慢慢了解基本的使用方法。</p>
-  <p>這次我想把照片中的圍巾改成紅色，再加上一些花朵圖案。我原本以為只要輸入提示詞，AI 就會直接生成我想要的圖片，但實際操作後發現沒有那麼簡單。有時候生成的結果跟想像中不太一樣，還需要修改提示詞和調整參數。</p>
-  <p>雖然過程中遇到一些困難，但看到自己成功生成圖片的時候，還是覺得很有成就感。透過這次作業，我學到了一些 ComfyUI 的基本操作，也發現 AI 生成圖片很有趣。希望以後可以再多嘗試不同的風格和功能。</p>
-
-  <h2>7. 工作流 JSON</h2>
-  <p><a href="assets/workflow.json" download="workflow.json">下載工作流 JSON</a></p>
-</body>
-</html>
+<body><main>
+<header><div class="eyebrow">COMFYUI / IMAGE-TO-IMAGE</div><h1>ComfyUI 圖生圖作業</h1></header>
+<div class="photos">
+<section><h2><span>01</span> 原圖</h2><figure><img src="original.jpg" alt="原始照片" width="1536" height="2048"><figcaption>BEFORE / 原始影像</figcaption></figure></section>
+<section><h2><span>02</span> 生成的圖</h2><figure><img src="generated.png" alt="ComfyUI 實際生成的圖片" width="1536" height="2048"><figcaption>AFTER / 生成結果</figcaption></figure></section>
+</div>
+<section><h2><span>03</span> 完整工作流截圖</h2><a class="workflow-link" href="workflow.png" target="_blank" rel="noopener"><img src="workflow.png" alt="ComfyUI 完整工作流截圖，點擊可查看原始大小" loading="lazy"></a><p class="hint">點擊圖片，查看完整大小。</p></section>
+<div class="prompts">
+<section><h2><span>04</span> 正向提示詞</h2><p class="prompt">preserve the original person and face, keep the same composition, change the scarf to a beautiful red scarf, add elegant floral patterns on the scarf, detailed flower decorations, realistic fabric texture, natural lighting, high quality, highly detailed</p></section>
+<section><h2><span>05</span> 反向提示詞</h2><p class="prompt">blurry, low quality, distorted face, deformed body, bad anatomy, extra fingers, unrealistic scarf, messy floral patterns, ugly, watermark, text, oversaturated</p></section>
+</div>
+<section class="reflection"><h2><span>06</span> 個人心得</h2>
+<p>這是我第一次使用 ComfyUI 來生成圖片。一開始看到這麼多節點和連接線，真的有點不知道該怎麼操作。後來跟著老師的教學一步一步嘗試，才慢慢了解基本的使用方法。</p>
+<p>這次我想把照片中的圍巾改成紅色，再加上一些花朵圖案。我原本以為只要輸入提示詞，AI 就會直接生成我想要的圖片，但實際操作後發現沒有那麼簡單。有時候生成的結果跟想像中不太一樣，還需要修改提示詞和調整參數。</p>
+<p>雖然過程中遇到一些困難，但看到自己成功生成圖片的時候，還是覺得很有成就感。透過這次作業，我學到了一些 ComfyUI 的基本操作，也發現 AI 生成圖片很有趣。希望以後可以再多嘗試不同的風格和功能。</p>
+</section>
+<section class="download"><h2><span>07</span> 工作流 JSON</h2><a class="button" href="workflow.json" download="workflow.json">下載工作流 JSON ↓</a></section>
+<footer>COMFYUI · 課程作業</footer>
+</main></body></html>
